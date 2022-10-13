@@ -12,13 +12,13 @@ export class ServicesUnavailableMiddleware implements NestMiddleware {
     const appUnavailableContenType = typeof this.configService.get("APP_UNAVAILABLE_CONTENTTYPE") != null ? this.configService.get("APP_UNAVAILABLE_CONTENTTYPE") : '';
     const appUnavailableStatus = typeof this.configService.get("APP_UNAVAILABLE_STATUS") != null ? this.configService.get("APP_UNAVAILABLE_STATUS") : 503;
 
-    const unavailableFrom = this.configService.get("APP_UNAVAILABLE_FROM");
-    const unavailableTo = this.configService.get("APP_UNAVAILABLE_TO"); 
-    if (typeof unavailableFrom != null && unavailableFrom != '') {
+    const unavailableFrom = typeof this.configService.get("APP_UNAVAILABLE_FROM") != null ? this.configService.get("APP_UNAVAILABLE_FROM") : '';
+    const unavailableTo = typeof this.configService.get("APP_UNAVAILABLE_TO") != null ? this.configService.get("APP_UNAVAILABLE_TO") : '';
+    if (unavailableFrom != '') {
       const timeNow = Date.now() / 1000;
       const timeFrom = new Date(unavailableFrom).getTime() / 1000;      
       if (timeNow > timeFrom) {
-        if (typeof unavailableTo != null && unavailableTo != '') {
+        if (unavailableTo != '') {
           const timeTo = new Date(unavailableTo).getTime() / 1000;  
           if (timeNow > timeTo) {            
             next();
