@@ -1,6 +1,6 @@
 {
   "name": "nestjs-unavailable-services",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Tommaso Sacramone",
   "license": "MIT",
   "main": "lib/index.js",
