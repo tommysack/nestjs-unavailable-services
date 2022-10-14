@@ -1,1 +1,1 @@
-export { ServicesUnavailableMiddleware } from './services-unavailable.middleware';
+export { ServicesUnavailableMiddlewareCreator } from './services-unavailable-middleware-creator';

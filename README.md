@@ -1,6 +1,13 @@
 # NestJS unavailable services
 
 This is a Middleware to manage the services temporarily unavailable due to maintenance.<br/>
+You can set this parameters:<br>
+- <i>appUnavailableFrom</i> is mandatory string of type 'mm/dd/yyyy hh:mm:ss'<br>
+- <i>appUnavailableTo</i> is optional string of type 'mm/dd/yyyy hh:mm:ss'<br>
+- <i>appUnavailableContentType</i> is optional string, if you doesn't set the parameter then the default is 'application/json; charset=utf-8'<br>
+- <i>appUnavailableStatus</i> is optional number, if you doesn't set the parameter then the default is 503<br>
+- <i>appUnavailableMessage</i> is optional string, if you doesn't set the parameter then the default is '{"status": "unavailable", "message": "Service unavailable"}'<br>
+
 
 ## Installation
 
@@ -10,25 +17,22 @@ $ npm i nestjs-unavailable-services
 
 ## How to use
 
-In your app.module.ts:<br>
+If you want to maintain your services from 12/30/2022 01:00:00 to 12/30/2022 01:00:00, then in your app.module.ts:<br>
 ```code
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(ServicesUnavailableMiddleware)
+    .apply(
+      ServicesUnavailableMiddlewareCreator({
+        appUnavailableContentType: 'application/json; charset=utf-8',
+        appUnavailableStatus: 503,
+        appUnavailableMessage: '{"status": "unavailable", "message": "Service unavailable from 12/30/2022 01:00:00 to 12/30/2022 02:00:00"}',
+        appUnavailableFrom: '12/30/2022 01:00:00',
+        appUnavailableTo: '12/30/2022 02:00:00'
+      })
+    )
     .forRoutes(FooController);
   }  
 }
 ```
 
-## Dependences
-
-The ServicesUnavailableMiddleware use <i>ConfigService</i> so you must have imported ConfigModule in your app.<br/>
-The configuration parameters you can set in your .env are:<br/>
-```code
-APP_UNAVAILABLE_FROM=12/30/2022 01:00:00
-APP_UNAVAILABLE_TO=12/30/2022 02:00:00
-APP_UNAVAILABLE_CONTENTTYPE=application/json; charset=utf-8
-APP_UNAVAILABLE_STATUS=503
-APP_UNAVAILABLE_MESSAGE={"status": "unavailable", "message": "Service unavailable from 01:00:00 to 02:00:00"}
-```
