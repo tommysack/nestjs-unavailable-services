@@ -17,7 +17,7 @@ $ npm i nestjs-unavailable-services
 
 ## How to use
 
-If you want to maintain your services in FooController from 12/30/2022 01:00:00 to 12/30/2022 01:00:00, then in your app.module.ts:<br>
+If you want to maintain your services in FooController from 12/30/2022 01:00:00 to 12/30/2022 02:00:00, then in your app.module.ts:<br>
 ```code
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
